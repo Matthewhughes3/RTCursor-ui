@@ -2,9 +2,8 @@
     <div>
         <span
             v-for="key in Object.keys(otherCursors)"
-            style="position: absolute"
+            :style="{position: 'absolute', left: `${otherCursors[key].x}px`, top: `${otherCursors[key].y}px`}"
             :key="key"
-            :ref="key"
         >🖱️</span>
     </div>
 </template>
@@ -51,10 +50,6 @@ export default {
             .build();
 
         vm.connection.on("receiveCursor", (userId, cursor) => {
-            if (vm.$refs[userId]) {
-                vm.$refs[userId][0].style.left = `${cursor.x}px`;
-                vm.$refs[userId][0].style.top = `${cursor.y}px`;
-            }
             vm.$set(vm.otherCursors, userId, cursor);
         });
 
